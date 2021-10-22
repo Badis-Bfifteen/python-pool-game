@@ -14,26 +14,11 @@ class Ball(pygame.sprite.Sprite):
         self.image = BALL_IMAGE
         self.rect = self.image.get_rect()
 
-        self.mouse_start_pos = Vec2(0, 0)
         self.velocity = Vec2(0, 0)
-        
-        self.mouse_down = False
 
         self.moving = False
 
         self.mass = 1
-
-    def trigger_mouse(self, position: Vec2):
-        if not self.mouse_down:
-            self.mouse_down = True
-            self.mouse_start_pos = position
-        
-        else:
-            self.mouse_down = False
-
-            force_vector = (self.mouse_start_pos - position).normalized()
-            self.add_force(Vec2.mul(force_vector, MAX_FORCE))
-            
 
     def add_force(self, force: Vec2 = Vec2(0, 0)):
         acceleration = Vec2.div(force, self.mass)
@@ -63,6 +48,9 @@ class Ball(pygame.sprite.Sprite):
 
     def get_position(self):
         return Vec2(self.rect.x, self.rect.y)
+
+    def get_center_position(self):
+        return Vec2(self.rect.x + self.get_radius(), self.rect.y + self.get_radius())
 
     def get_radius(self):
         return self.rect.width / 2

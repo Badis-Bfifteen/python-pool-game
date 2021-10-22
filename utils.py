@@ -28,7 +28,11 @@ class Vec2:
         self.n_div(self.magnitude())
 
     def normalized(self):
-        return Vec2.div(self, self.magnitude())
+        mag = self.magnitude()
+        
+        if mag == 0: return Vec2(0, 0)
+
+        return Vec2.div(self, mag)
 
     def magnitude(self):
         return sqrt(self.sqrmagnitude())
@@ -43,6 +47,9 @@ class Vec2:
     def n_mul(self, num):
         self.x *= num
         self.y *= num
+
+    def values(self):
+        return (self.x, self.y)
 
     def dot(self, other):
         return self.x * other.x + self.y * other.y

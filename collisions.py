@@ -1,9 +1,7 @@
-from ball import Ball
 from constants import HEIGHT, WIDTH
-from utils import Vec2
 
 
-def check_ball_collisions(*balls):
+def check_ball_collisions(balls):
 
 
     for i in range(len(balls)):
@@ -15,7 +13,7 @@ def check_ball_collisions(*balls):
 
 
 
-def check_table_collisions(*balls):
+def check_table_collisions(balls):
 
     for ball in balls:
         if ball.rect.x + ball.rect.width > WIDTH or ball.rect.x < 0:
