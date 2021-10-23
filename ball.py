@@ -1,4 +1,4 @@
-from math import log
+from math import ceil, log
 import pygame
 
 from constants import DELTA_TIME, DRAG, MAX_FORCE, SPEED_THRESHOLD, WIDTH, HEIGHT
@@ -67,7 +67,8 @@ class Ball(pygame.sprite.Sprite):
             return
 
 
-        mtd = (req_dist - dist) // 2
+        mtd = ceil((req_dist - dist) / 2)
+        if mtd == 1: mtd = 2
 
         un = n.normalized()
 

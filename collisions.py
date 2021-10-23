@@ -16,9 +16,23 @@ def check_ball_collisions(balls):
 def check_table_collisions(balls):
 
     for ball in balls:
-        if ball.rect.x + ball.rect.width > WIDTH or ball.rect.x < 0:
+        next_x = ball.rect.x + ball.velocity.x
+        next_y = ball.rect.y + ball.velocity.y
+
+        if next_x + ball.rect.width > WIDTH - 45:
             ball.velocity.x *= -1
+            ball.set_position(WIDTH - 45 - ball.rect.width, ball.rect.y)
+
+        if next_x < 45:
+            ball.velocity.x *= -1
+            ball.set_position(45, ball.rect.y)
                 
 
-        if ball.rect.y + ball.rect.height > HEIGHT or ball.rect.y < 0:
+        if next_y + ball.rect.height > HEIGHT - 45:
             ball.velocity.y *= -1
+            ball.set_position(ball.rect.x, HEIGHT - 45 - ball.rect.height)
+
+        if next_y < 45:
+            ball.velocity.y *= -1
+            ball.set_position(ball.rect.x, 45)
+
