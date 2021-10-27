@@ -7,7 +7,7 @@ HEIGHT  = 480
 WIDTH = 920
 
 # Ball
-DRAG = .04
+DRAG = .03
 SPEED_THRESHOLD = 1.5
 DELTA_TIME = 1 / 177
 
@@ -18,3 +18,25 @@ CUE_HEIGHT = 512 * .0575
 POWER_MULTIPLIER = 800
 MAX_FORCE = 8500
 MIN_FORCE = 200
+
+
+
+# Table
+TABLE_OFFSET = 45
+HOLE_RADIUS = 30
+
+BLACK_BALL_PLACEMENT = [3 * WIDTH / 4, HEIGHT / 2 + 7]
+
+RED_BALL_PLACEMENT = [
+    [3 * WIDTH / 4, HEIGHT / 2 - 20],
+    [3 * WIDTH / 4 + 35, HEIGHT / 2 - 15],
+    [3 * WIDTH / 4 - 35, HEIGHT / 2 + 15],
+    [3 * WIDTH / 4 + 70, HEIGHT / 2 + 7],
+]
+
+YELLOW_BALL_PLACEMENT = [
+    [3 * WIDTH / 4 - 70, HEIGHT / 2 + 7],
+    [3 * WIDTH / 4 + 35, HEIGHT / 2 + 15],
+    [3 * WIDTH / 4 - 35, HEIGHT / 2 - 15],
+    [3 * WIDTH / 4, HEIGHT / 2 + 20],
+]

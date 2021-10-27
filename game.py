@@ -1,19 +1,22 @@
 import pygame
-from pygame.constants import SCRAP_SELECTION
 
 from collisions import *
 
 from ball import Ball
 from cue import Cue
+from image_loader import BALL_IMAGE, BALL_RED_IMAGE, BALL_YELLOW_IMAGE
 from table import Table
 
-from constants import HEIGHT, WIDTH, FPS
+from constants import HEIGHT, WIDTH, FPS, RED_BALL_PLACEMENT, YELLOW_BALL_PLACEMENT
 
 class Game:
 
     def __init__(self) -> None:
         pygame.init()
         pygame.mixer.init()
+
+
+        self.debut = True
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -23,34 +26,37 @@ class Game:
 
         self.table = Table()
 
+        self.sprites = pygame.sprite.Group()
 
-        self.player_ball = Ball()
-        self.ball0 = Ball()
-        self.ball1 = Ball()
-        self.ball2 = Ball()
-
-
-        self.ball0.set_position(50, 50)
-        self.ball1.set_position(60, 60)
-        self.ball2.set_position(100, 100)
+        self.player_ball = Ball(BALL_IMAGE)
+        
         self.balls = [
             self.player_ball,
-            self.ball0,
-            self.ball1,
-            self.ball2
         ]
 
-        self.cue = Cue(self.player_ball)
-
-
-        self.sprites = pygame.sprite.Group()
         
         self.sprites.add(self.table)
         self.sprites.add(self.player_ball)
-        self.sprites.add(self.ball0)
-        self.sprites.add(self.ball1)
-        self.sprites.add(self.ball2)
 
+
+        for b in RED_BALL_PLACEMENT:
+            ball = Ball(BALL_RED_IMAGE)
+
+            ball.set_position(b[0], b[1])
+
+            self.balls.append(ball)
+            self.sprites.add(ball)
+            
+        for b in YELLOW_BALL_PLACEMENT:
+            ball = Ball(BALL_YELLOW_IMAGE)
+
+            ball.set_position(b[0], b[1])
+
+            self.balls.append(ball)
+            self.sprites.add(ball)
+            
+
+        self.cue = Cue(self.player_ball)
 
         self.player_ball.set_position(WIDTH // 4, HEIGHT // 2)
 
@@ -77,13 +83,26 @@ class Game:
                     self.cue.stop_mouse_hold()
 
 
+            for ball in self.balls:
+                if ball.potted:
+                    if ball == self.player_ball:
+                        ball.set_position(WIDTH // 4, HEIGHT // 2)
+                        ball.potted = False
+                        ball.velocity.set(0, 0)
+                        continue
+                    self.balls.remove(ball)
+                    self.sprites.remove(ball)
+
             self.sprites.update()
 
 
             ##############
             check_ball_collisions(self.balls)
             check_table_collisions(self.balls)
+            check_holes_collision(self.balls)
             ##############
+
+
 
 
             self.sprites.draw(self.screen)
@@ -93,6 +112,20 @@ class Game:
                 self.screen.blit(self.cue.image, self.cue.rect)
 
 
+            if self.debut:
+                holes = [
+                    Vec2(TABLE_OFFSET + 10, TABLE_OFFSET + 10),
+                    Vec2(TABLE_OFFSET + 10, HEIGHT - TABLE_OFFSET - 10),
+                    Vec2(WIDTH - TABLE_OFFSET - 10, TABLE_OFFSET + 10),
+                    Vec2(WIDTH - TABLE_OFFSET - 10, HEIGHT - TABLE_OFFSET - 10),
+                    Vec2(WIDTH // 2, TABLE_OFFSET - 10),
+                    Vec2(WIDTH // 2, HEIGHT - TABLE_OFFSET + 10),
+                ]
+                for hole in holes:
+                    pygame.draw.circle(self.screen, (0, 255, 0), hole.values(), 30)
+            
+
             pygame.display.flip()
+
     
         pygame.quit()

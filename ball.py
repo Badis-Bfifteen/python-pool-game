@@ -1,22 +1,23 @@
-from math import ceil, log
+from math import ceil
 import pygame
 
-from constants import DELTA_TIME, DRAG, MAX_FORCE, SPEED_THRESHOLD, WIDTH, HEIGHT
+from constants import DELTA_TIME, DRAG, SPEED_THRESHOLD
 from image_loader import BALL_IMAGE
 from utils import Vec2
 
 
 class Ball(pygame.sprite.Sprite):
 
-    def __init__(self) -> None:
+    def __init__(self, img) -> None:
         super().__init__()
 
-        self.image = BALL_IMAGE
+        self.image = img
         self.rect = self.image.get_rect()
 
         self.velocity = Vec2(0, 0)
 
         self.moving = False
+        self.potted = False
 
         self.mass = 1
 
@@ -55,6 +56,8 @@ class Ball(pygame.sprite.Sprite):
     def get_radius(self):
         return self.rect.width / 2
 
+    def pot(self):
+        self.potted = True
 
     def check_collision(self, ball):
         n = self.get_position() - ball.get_position()

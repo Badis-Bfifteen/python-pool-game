@@ -1,10 +1,9 @@
 import pygame
 
 from math import atan, pi
-from pygame.constants import SRCALPHA
 
 from ball import Ball
-from constants import CUE_HEIGHT, CUE_WIDTH, DELTA_TIME, HEIGHT, MAX_FORCE, MIN_FORCE, POWER_MULTIPLIER, WIDTH
+from constants import CUE_HEIGHT, CUE_WIDTH, DELTA_TIME, MAX_FORCE, MIN_FORCE, POWER_MULTIPLIER
 
 from image_loader import CUE_IMAGE
 from utils import Vec2
