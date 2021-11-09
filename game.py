@@ -16,7 +16,7 @@ class Game:
         pygame.mixer.init()
 
 
-        self.debut = True
+        self.debug = False
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -112,7 +112,7 @@ class Game:
                 self.screen.blit(self.cue.image, self.cue.rect)
 
 
-            if self.debut:
+            if self.debug:
                 holes = [
                     Vec2(TABLE_OFFSET + 10, TABLE_OFFSET + 10),
                     Vec2(TABLE_OFFSET + 10, HEIGHT - TABLE_OFFSET - 10),
